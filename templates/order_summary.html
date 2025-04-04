@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+
+        p {
+            margin: 20px 0;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: yellow;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #e0e000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+        <div class="order-summary">
+            <h2>PRNI Order Summary</h2>
+            <ul>
+                {% for product in selected_products %}
+
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" width="100">
+                        <h4>{{ product.title }}</h4>
+                        <p>Price: ₹{{ product.price }}</p>
+
+                {% endfor %}
+            </ul>
+            <p>Total Order Amount: ₹{{ total_amount }}</p>
+        </div>
+    <h1 class="success-message">YOUR ORDER IS SUCCESSFULLY PLACED!!</h1>
+    <p>Your order will be delivered within 7 Working days</p>
+    <p>Thank you for your purchase!</p>
+<!--    <a href="#" class="back-button">Back</a>-->
+    <a href="{% url 'product_list' %}">Back</a>
+</body>
+</html>
+
+
+

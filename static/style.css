@@ -1,0 +1,173 @@
+/* Reuse navbar styles from homepage */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Reuse styles for product detail page */
+        .product-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 800px; /* Center align the content */
+            padding: 0 20px;
+        }
+
+        .product-detail-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd; /* Optional: border around image */
+        }
+
+        .product-detail-container h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-detail-container p {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #ffc107;
+            border: none;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn-container button:hover {
+            background-color: #e0a800;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .product-image {
+            width: 100px;
+            height: auto;
+        }
+
+        .center-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Style for Proceed to Checklist button */
+        .center-button button {
+            background-color: #ffc107; /* Yellow color */
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .center-button button:hover {
+            background-color: #e0a800;
+        }
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Layout and Container Styling */
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.checklist img {
+    width: 150px;
+}
+
+.checklist h2 {
+    font-size: 1.5em;
+}
+
+/* Hover Effects */
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.checklist li {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.checklist li:hover {
+    background-color: #f0f0f0;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Checklist</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <style>
+        /* Navbar Styles */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Cart Checklist Styles */
+        .checklist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .checklist img {
+            width: 150px;
+            height: auto;
+        }
+
+        .checklist h2 {
+            font-size: 1.5em;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #ffc107;
+            border: none;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn-container button:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PRNI Cart Checklist</h1>
+    </header>
+
+    <main>
+        <div class="checklist">
+            {% if products %}
+                <ul>
+                    {% for product in products %}
+                        <li>
+                            <img src="{{ product.image.url }}" alt="{{ product.title }}" width="100">
+                            <h2>{{ product.title }}</h2>
+                            <p>Price: ₹{{ product.price }}</p>
+                            <p>Discount Price: ₹{{ product.discount_price }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="btn-container">
+                    <form action="{% url 'shipping_details' %}" method="get">
+                        <button type="submit">Continue to Shipping Details</button>
+                    </form>
+                </div>
+            {% else %}
+                <p>YOUR CART IS EMPTY!!</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

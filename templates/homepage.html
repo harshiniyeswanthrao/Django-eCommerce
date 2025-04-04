@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRNI Shopping Center</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Custom CSS for navbar */
+        .navbar {
+            background-color: #343a40; /* Dark background color */
+            padding: 10px 20px; /* Padding for spacing */
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between brand and nav items */
+            align-items: center; /* Center the content vertically */
+        }
+
+        .navbar-brand {
+            color: #fff; /* White color for the brand name */
+            text-decoration: none; /* Remove underline from the brand name */
+            font-size: 1.5rem; /* Larger font size for the brand name */
+        }
+
+        .navbar-nav {
+            list-style: none; /* Remove bullets from the list */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+            display: flex; /* Align nav items in a row */
+        }
+
+        .nav-item {
+            margin-left: 20px; /* Space between nav items */
+        }
+
+        .nav-link {
+            color: #fff; /* White color for links */
+            text-decoration: none; /* Remove underline from links */
+            font-size: 1rem; /* Font size for nav links */
+        }
+
+        .nav-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Custom CSS for product display */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            width: 23%; /* Four products per row */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-card h5 {
+            font-size: 1.25rem;
+            margin: 10px 0;
+        }
+
+        .product-card p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .product-card .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .product-card button, .product-card .btn-view {
+            padding: 10px 15px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            flex: 1; /* Take equal space */
+            margin: 0 5px;
+            border-radius: 5px;
+            text-align: center; /* Center text inside button */
+        }
+
+        .product-card .btn-view {
+            background-color: #007bff;
+        }
+
+        .product-card button {
+            background-color: #ffc107;
+        }
+
+        .product-card button:hover {
+            background-color: #e0a800;
+        }
+
+        .product-card .btn-view:hover {
+            background-color: #0056b3;
+        }
+
+        /* Custom CSS for search bar */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 5px;
+        }
+
+        .search-bar button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="{% url 'home_or_shop' %}">PRNI Shopping Center</a>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_or_shop' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'My_Orders' %}">My Orders</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content section -->
+    <div class="container">
+        <h1>Welcome to PRNI Shopping Center</h1>
+        <p>Explore our wide range of products and enjoy your shopping experience!</p>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <form method="GET" action="{% url 'product_list' %}">
+                <input type="text" name="q" placeholder="Search for products" value="{{ request.GET.q }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Product Display -->
+        <div class="product-container">
+            {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.title }}">
+
+                <h5>{{ product.title }}</h5>
+                <p>Price: ₹{{ product.price }}</p>
+<!--                <p>Discount Price: ₹{{ product.discount_price }}</p>-->
+                <div class="btn-container">
+                    <a href="{% url 'product_detail' product.id %}" class="btn-view">View</a>
+                    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        /* Your existing styles */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .product-image {
+            width: 100px;
+            height: auto;
+        }
+
+        .center-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .center-button button {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .center-button button:hover {
+            background-color: #e0a800;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="{% url 'home_or_shop' %}">PRNI Shopping Center</a>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_or_shop' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'view_cart' %}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'My_Orders' %}">My Orders</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <h1>PRNI Shopping Cart</h1>
+
+    <form action="{% url 'checklist' %}" method="post">
+        {% csrf_token %}
+        {% if cart.products %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.products %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_products" value="{{ item.product.id }}"></td>
+                            <td><img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="product-image"></td>
+                            <td>{{ item.product.title }}</td>
+                            <td>
+                                <!-- Form for decreasing quantity -->
+                                <form action="{% url 'decrease_quantity' item.product.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-button">-</button>
+                                </form>
+                                {{ item.quantity }}
+                                <!-- Form for increasing quantity -->
+                                <form action="{% url 'increase_quantity' item.product.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-button">+</button>
+                                </form>
+                            </td>
+                            <td>₹{{ item.product.price }}</td>
+                            <td>₹{{ item.item_total }}</td>
+                            <td>
+                                <form action="{% url 'remove_from_cart' item.product.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-button">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Total Amount: ₹{{ cart_total }}</h2>
+
+            <div class="center-button">
+                <button type="submit">Proceed to Checklist</button>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+            <a href="{% url 'product_list' %}">Continue Shopping</a>
+        {% endif %}
+    </form>
+</body>
+</html>
+
+
+
